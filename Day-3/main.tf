@@ -1,16 +1,4 @@
-resource "aws_instance" "test" {
-    ami = "ami-0f918f7e67a3323f0"
-    instance_type = "t2.micro"
-    iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
 
-  tags = {
-    Name = "EC2WithRole"
-  }
-     #lifecycle {
-    #create_before_destroy = true
-  #}
-  
-}
 
 
 #Creating a iam role for EC2
@@ -33,6 +21,20 @@ resource "aws_iam_role" "ec2_role" {
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = "ec2-profile"
   role = aws_iam_role.ec2_role.name
+}
+#creatin an ec2 instance
+resource "aws_instance" "test" {
+    ami = "ami-0f918f7e67a3323f0"
+    instance_type = "t2.micro"
+    iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
+
+  tags = {
+    Name = "EC2WithRole"
+  }
+     #lifecycle {
+    #create_before_destroy = true
+  #}
+  
 }
 
 #Creating s3 bucket as want to push the .tfstate file for the secure
