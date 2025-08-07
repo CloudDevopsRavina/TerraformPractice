@@ -106,9 +106,6 @@ dynamodb_table = "terraform-locks" → this is what enables locking
 ⚠️ When You Might See a Locking Error
 If you see something like:
 
-csharp
-Copy
-Edit
 Error acquiring the state lock
 It usually means:
 
@@ -120,6 +117,26 @@ A previous operation crashed before unlocking
 If the lock wasn't released properly:
 
 terraform force-unlock <LOCK_ID>
+
+. State Locking in S3 Backend (REAL Terraform feature)
+When you use S3 as a backend with DynamoDB for state locking, Terraform automatically supports state locking to prevent two people from applying changes at the same time.
+
+Example backend config:
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "dev/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-lock-table"
+    encrypt        = true
+  }
+}
+What this does:
+dynamodb_table: Enables state locking
+
+It ensures only one person can run terraform apply at a time
+
+Prevents race conditions and corrupt state
 
 =====================================command==============
 Terraform init
