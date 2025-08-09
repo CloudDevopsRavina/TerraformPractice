@@ -26,3 +26,17 @@ variable "Destination_IGW_RT" {
     default = ""
 
 }
+
+variable "subnet_cider_private" {
+    description = "destination traffic allow all 0.0.0.0/0"
+    type = string
+    default = ""
+  
+}
+
+variable "Destination_NAT_RT" {
+    description = "destination traffic allow all 0.0.0.0/0"
+    type = string
+    default = ""
+  
+}
